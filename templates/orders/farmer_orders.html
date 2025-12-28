@@ -1,0 +1,15 @@
+{% for order in orders %}
+<p>
+    {{ order.crop.name }} - {{ order.quantity }} kg - {{ order.status }}
+
+    {% if order.status == 'pending' %}
+        <a href="{% url 'update_order_status' order.id 'accepted' %}">
+            Accept
+        </a>
+        |
+        <a href="{% url 'update_order_status' order.id 'rejected' %}">
+            Reject
+        </a>
+    {% endif %}
+</p>
+{% endfor %}

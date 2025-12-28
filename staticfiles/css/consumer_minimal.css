@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
+    background: #0a6d4a;
+    color: white;
+}
+.nav-links li {
+    display: inline;
+    margin-left: 20px;
+}
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+/* CAROUSEL */
+.carousel {
+    height: 350px;
+    background: #ddd;
+    text-align: center;
+    padding-top: 120px;
+}
+.slide {
+    display: none;
+}
+.slide.active {
+    display: block;
+}
+.carousel h1 {
+    font-size: 40px;
+}
+.carousel p {
+    font-size: 18px;
+}
+
+/* FEATURES */
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px;
+    background: white;
+}
+.feature-card {
+    text-align: center;
+    width: 200px;
+}
+
+/* ASSURANCE */
+.assurance {
+    background: #eef5f0;
+    text-align: center;
+    padding: 50px;
+}
+.assurance-points {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* FOOTER */
+.footer {
+    background: #0a6d4a;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}

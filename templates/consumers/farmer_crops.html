@@ -1,0 +1,434 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Crops | FarmPlace</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0fdfa;
+    margin: 0;
+    color: #333;
+}
+
+/* ===== HEADER ===== */
+.farmer-banner {
+    background: linear-gradient(135deg,#0f766e,#14b8a6);
+    color: white;
+    padding: 50px 60px;
+    text-align: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.farmer-banner h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+.farmer-banner p {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* ===== CROPS GRID ===== */
+.crop-container {
+    padding: 50px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 25px;
+}
+.crop-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.crop-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 40px rgba(0,0,0,0.1);
+}
+.crop-card h4 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.price {
+    color: #0f766e;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.stock {
+    font-size: 14px;
+    color: #666;
+}
+
+/* ===== STOCK BADGE ===== */
+.stock-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+}
+.in-stock { background: #16a34a; }
+.out-stock { background: #ef4444; }
+
+/* ===== QUANTITY ===== */
+.quantity-box {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    gap: 10px;
+}
+.qty-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #ecfeff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.qty-btn:hover { background: #0f766e; color: white; }
+.qty-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.quantity-box span {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* ===== ADD TO CART BUTTON ===== */
+.add-btn {
+    background: linear-gradient(135deg,#0f766e,#14b8a6);
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+/* ===== ERROR BANNER ===== */
+.error-banner {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: none;
+    animation: shake 0.3s ease;
+}
+@keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-4px); }
+}
+
+/* ===== CART PANEL ===== */
+.cart-box {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 280px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    padding: 20px;
+    transition: 0.3s;
+}
+.cart-box h4 { margin-bottom: 15px; }
+.cart-item { margin-bottom: 8px; font-size: 14px; }
+.place-order {
+    margin-top: 15px;
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.clear-cart {
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 14px;
+}
+.page-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 30px;
+    padding: 0px 60px;
+    align-items: start;
+}
+
+/* Crop Grid */
+.crop-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* Cart */
+.cart-box {
+    position: sticky;
+    top: 90px;
+    height: fit-content;
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .page-layout {
+        grid-template-columns: 1fr;
+    }
+    .cart-box {
+        position: relative;
+        margin-top: 30px;
+    }
+}
+.empty-cart-msg {
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+    padding: 15px 0;
+}
+.place-order:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+.back-nav {
+    max-width: 1200px;
+    margin: 20px auto 0;
+    padding: 0 60px;
+}
+
+.back-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: #0f766e;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.back-link:hover {
+    color: #115e59;
+    transform: translateX(-4px);
+}
+
+</style>
+</head>
+<body>
+
+<!-- FARMER HEADER -->
+<div class="farmer-banner">
+    <h2 style="display:flex;align-items:center;justify-content:center;gap:10px;">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+        <path d="M12 3v18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 7c-4 0-6 2-6 5 4 0 6-2 6-5z"
+              stroke="white" stroke-width="2"/>
+        <path d="M12 7c4 0 6 2 6 5-4 0-6-2-6-5z"
+              stroke="white" stroke-width="2"/>
+    </svg>
+    Crops from {{ farmer.user.username }}
+</h2>
+
+    <p>Fresh produce directly from the farm</p>
+</div>
+<!-- BACK NAVIGATION -->
+<div class="back-nav">
+   <a href="{% url 'consumer_search' %}" class="back-link"
+   style="display:inline-flex;align-items:center;gap:6px;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M15 18l-6-6 6-6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+    </svg>
+    Back to Dashboard
+</a>
+
+</div>
+
+<!-- ERROR BOX -->
+<div id="errorBox" class="error-banner"></div>
+
+<div class="page-layout">
+<!-- CROPS GRID -->
+<div class="crop-container">
+{% for crop in crops %}
+<div class="crop-card">
+    <h4>{{ crop.name }}</h4>
+    <p class="price">₹{{ crop.price_per_kg }} / kg</p>
+    <p class="stock">{{ crop.quantity }} kg available</p>
+    <span class="stock-badge {% if crop.quantity > 0 %}in-stock{% else %}out-stock{% endif %}">
+        {% if crop.quantity > 0 %}In Stock{% else %}Out of Stock{% endif %}
+    </span>
+
+    <div class="quantity-box">
+        <button class="qty-btn" onclick="decrease('{{ crop.id }}')">−</button>
+        <span id="qty-{{ crop.id }}">1</span>
+        <button class="qty-btn" onclick="increase('{{ crop.id }}', {{ crop.quantity }})">+</button>
+    </div>
+
+    <button class="add-btn" onclick="addToCart('{{ crop.id }}', '{{ crop.name }}', {{ crop.price_per_kg }}, {{ crop.quantity }})">
+        Add to Cart
+    </button>
+</div>
+{% empty %}
+<p>No crops available</p>
+{% endfor %}
+</div>
+
+<!-- CART PANEL -->
+<div class="cart-box" id="cart">
+    <h4 style="display:flex;align-items:center;gap:8px;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M6 6h15l-1.5 9h-12z"
+              stroke="#0f766e"
+              stroke-width="2"
+              stroke-linejoin="round"/>
+        <circle cx="9" cy="20" r="1.5" fill="#0f766e"/>
+        <circle cx="18" cy="20" r="1.5" fill="#0f766e"/>
+    </svg>
+    Your Cart
+</h4>
+
+    <div id="cart-items" class="empty-cart-msg">
+    🧺 Your cart is empty<br>
+    <small>Add crops to proceed</small>
+</div>
+
+
+    <form method="post" action="{% url 'checkout' %}">
+    {% csrf_token %}
+    <input type="hidden" name="cart_data" id="cart-data">
+    <button class="place-order">Proceed to Checkout</button>
+    <button class="clear-cart" type="button" onclick="clearCart()">✖ Clear Cart</button>
+</form>
+
+</div>
+
+</div>
+<script>
+let cart = {};
+
+// Quantity Functions
+function increase(id, max) {
+    let el = document.getElementById(`qty-${id}`);
+    let val = parseInt(el.innerText);
+    if (val < max) el.innerText = val + 1;
+}
+function decrease(id) {
+    let el = document.getElementById(`qty-${id}`);
+    let val = parseInt(el.innerText);
+    if (val > 1) el.innerText = val - 1;
+}
+
+// Cart Functions
+function addToCart(id, name, price, stock) {
+    let qty = parseInt(document.getElementById(`qty-${id}`).innerText);
+    if (qty > stock) { showError("⚠️ Quantity exceeds stock"); return; }
+    cart[id] = { name, qty, price };
+    renderCart();
+}
+
+function renderCart() {
+    let container = document.getElementById("cart-items");
+    container.innerHTML = "";
+    if(Object.keys(cart).length === 0) {
+        container.innerHTML = "<p>Your cart is empty</p>";
+        return;
+    }
+    for (let id in cart) {
+        let item = cart[id];
+        container.innerHTML += `<div class="cart-item">${item.name} × ${item.qty}</div>`;
+    }
+    document.getElementById("cart-data").value = JSON.stringify(cart);
+}
+
+function clearCart() {
+    cart = {};
+    renderCart();
+}
+
+function showError(msg) {
+    const box = document.getElementById("errorBox");
+    box.innerText = msg;
+    box.style.display = "block";
+    setTimeout(()=>box.style.display="none",2500);
+}
+
+function renderCart() {
+    let container = document.getElementById("cart-items");
+    let checkoutBtn = document.querySelector(".place-order");
+
+    container.innerHTML = "";
+
+    if (Object.keys(cart).length === 0) {
+        container.innerHTML = `
+            <div class="empty-cart-msg">
+                🧺 Your cart is empty<br>
+                <small>Add crops to proceed</small>
+            </div>
+        `;
+        checkoutBtn.disabled = true;
+        document.getElementById("cart-data").value = "";
+        return;
+    }
+
+    checkoutBtn.disabled = false;
+
+    for (let id in cart) {
+        let item = cart[id];
+        container.innerHTML += `
+            <div class="cart-item">
+                ${item.name} × ${item.qty}
+            </div>
+        `;
+    }
+
+    document.getElementById("cart-data").value = JSON.stringify(cart);
+}
+
+renderCart();
+
+document.querySelector("form").addEventListener("submit", function(e) {
+    if (Object.keys(cart).length === 0) {
+        e.preventDefault();
+        alert("🧺 Please add at least one item to cart");
+    }
+});
+</script>
+
+
+
+</body>
+</html>

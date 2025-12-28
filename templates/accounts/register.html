@@ -1,0 +1,250 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | FarmPlace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+        }
+
+        .register-card {
+            width: 900px;
+            max-width: 95%;
+            background: #fff;
+            border-radius: 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+        }
+
+        .register-left {
+            background: #f0fdfa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .register-left img { max-width: 320px; }
+
+        .register-right { padding: 45px; }
+
+        h2 { color: #0f766e; margin-bottom: 6px; }
+        p.sub { font-size: 14px; color: #64748b; margin-bottom: 25px; }
+
+        .field { margin-bottom: 16px; }
+
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #334155;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #14b8a6;
+        }
+
+        .error { color: #dc2626; font-size: 12px; margin-top: 4px; }
+
+        button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 14px;
+            background: #0f766e;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover { background: #115e59; }
+
+        .extra-links {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+        }
+
+        .extra-links a { color: #0f766e; text-decoration: none; font-weight: 500; }
+
+        @media (max-width: 768px) {
+            .register-card { grid-template-columns: 1fr; }
+            .register-left { display: none; }
+        }
+    
+        /* MULTI STEP FORM */
+        .form-step {
+            display: none;
+            animation: slideIn 0.4s ease forwards;
+        }
+        .form-step.active {
+            display: block;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .step-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .field-error {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.error-box {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="register-card">
+
+    <div class="register-left">
+        <img src="https://i.pinimg.com/736x/57/04/5f/57045fce26555c99ad9a3790b2b851f0.jpg">
+    </div>
+
+    <div class="register-right">
+        <h2>Create Account</h2>
+        <p class="sub">Join FarmPlace as Farmer or Consumer</p>
+
+        <form method="post" id="registerForm">
+            {% if form.non_field_errors %}
+    <div class="error-box">
+        {{ form.non_field_errors }}
+    </div>
+{% endif %}
+
+    {% csrf_token %}
+
+    <!-- STEP 1 -->
+    <div class="form-step active">
+        <label>Username</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+    <div class="field-error">{{ form.username.errors.0 }}</div>
+{% endif %}
+        <label>Email Address</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+    <div class="field-error">{{ form.email.errors.0 }}</div>
+{% endif %}
+        <button type="button" class="next-btn">Next</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="form-step">
+        <label>Register As</label>
+        {{ form.role }}
+        {% if form.role.errors %}
+    <div class="field-error">{{ form.role.errors.0 }}</div>
+{% endif %}
+        <label>Phone Number</label>
+{{ form.phone }}
+{% if form.phone.errors %}
+    <div class="field-error">{{ form.phone.errors.0 }}</div>
+{% endif %}
+
+        <button type="button" class="prev-btn">Back</button>
+        <button type="button" class="next-btn">Next</button>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="form-step">
+        <label>Password</label>
+        {{ form.password1 }}
+{% if form.password1.errors %}
+    <div class="field-error">{{ form.password1.errors.0 }}</div>
+{% endif %}
+        <label>Confirm Password</label>
+        {{ form.password2 }}
+{% if form.password2.errors %}
+    <div class="field-error">{{ form.password2.errors.0 }}</div>
+{% endif %}
+        <button type="button" class="prev-btn">Back</button>
+        <button type="submit">Create Account</button>
+    </div>
+</form>
+
+        <div class="extra-links">
+            Already registered? <a href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    const steps = document.querySelectorAll('.form-step');
+    let currentStep = 0;
+
+    function showStep(index) {
+        steps.forEach((step, i) => {
+            step.classList.toggle('active', i === index);
+        });
+    }
+
+    document.querySelectorAll('.next-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        });
+    });
+
+    document.querySelectorAll('.prev-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+    });
+
+    showStep(currentStep);
+    
+</script>
+<script>
+if (document.querySelector('.field-error')) {
+    document.querySelector('.field-error').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

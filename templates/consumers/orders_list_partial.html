@@ -1,0 +1,18 @@
+{% for order in orders %}
+<div class="order-card">
+    <div>
+        <strong>{{ order.crop.name }}</strong> — {{ order.quantity }} kg
+        <div>Status: {{ order.status|capfirst }}</div>
+
+        {% if order.status == 'accepted' %}
+            <div class="contact">📞 {{ order.farmer.phone }}</div>
+        {% endif %}
+    </div>
+
+    <span class="status {{ order.status }}">
+        {{ order.status|capfirst }}
+    </span>
+</div>
+{% empty %}
+<p>No orders yet.</p>
+{% endfor %}

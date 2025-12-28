@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details | FarmPlace</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0fdfa;
+            margin: 0;
+            color: #0f172a;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            color: white;
+            padding: 40px 60px;
+            border-bottom-left-radius: 22px;
+            border-bottom-right-radius: 22px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .header span {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        /* CONTENT */
+        .container {
+            padding: 40px 60px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            animation: fadeUp 0.5s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ORDER META */
+        .order-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .order-meta div {
+            font-size: 14px;
+            color: #475569;
+        }
+
+        /* ITEMS TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #f1f5f9;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        /* TOTAL */
+        .total {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* ACTIONS */
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .actions a {
+            text-decoration: none;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 999px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .accept {
+            background: #16a34a;
+            color: white;
+        }
+
+        .reject {
+            background: #ef4444;
+            color: white;
+        }
+
+        .back {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* RESPONSIVE */
+        @media(max-width: 768px) {
+            .container, .header {
+                padding: 25px;
+            }
+
+            .order-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h2>📦 Order #{{ order.id }}</h2>
+    <span>Placed {{ order.created_at|timesince }} ago</span>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <div class="card">
+
+        <!-- ORDER META -->
+        <div class="order-meta">
+            <div>
+                <strong>Customer:</strong> {{ order.consumer.username }}
+            </div>
+            <div>
+                <strong>Status:</strong> {{ order.status|capfirst }}
+            </div>
+        </div>
+
+        <!-- ITEMS -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Crop</th>
+                    <th>Quantity (kg)</th>
+                    <th>Price / kg</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% with 0 as grand_total %}
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.crop.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.price_per_kg }}</td>
+                    <td><td>₹{{ item.subtotal }}</td></td>
+                </tr>
+                {% endfor %}
+                {% endwith %}
+            </tbody>
+        </table>
+
+        <!-- TOTAL -->
+ <div class="total">
+    Total: ₹{{ grand_total }}
+</div>
+
+<br>
+        <!-- ACTIONS -->
+        {% if order.status == "pending" %}
+        <div class="actions">
+            <a href="{% url 'update_order_status' order.id 'accepted' %}">
+                <button class="btn accept">Accept Order</button>
+            </a>
+            <a href="{% url 'update_order_status' order.id 'cancelled' %}">
+                <button class="btn reject">Reject Order</button>
+            </a>
+        </div>
+        {% endif %}
+
+        <div class="actions">
+            <a href="{% url 'farmer_dashboard' %}">
+                <button class="btn back">⬅ Back to Dashboard</button>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

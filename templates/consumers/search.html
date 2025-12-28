@@ -1,0 +1,1267 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FarmPlace | Consumer Dashboard</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f9fafb;
+            color: #333;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        nav {
+            background: #0f766e;
+            color: #fff;
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            font-weight: 600;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* ---------- HERO / CAROUSEL ---------- */
+        .hero {
+            position: relative;
+            height: 380px;
+            overflow: hidden;
+        }
+
+        .hero img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            font-size: 40px;
+            font-weight: 600;
+        }
+
+        .hero-text p {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        /* ---------- SEARCH BAR ---------- */
+        .search-box {
+            background: #fff;
+            width: 60%;
+            margin: -35px auto 50px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .search-box form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .search-box button {
+            background: #0f766e;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* ---------- FEATURES ---------- */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            padding: 40px 60px;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 14px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        .feature-card i {
+            font-size: 35px;
+            color: #0f766e;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h4 {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        /* ---------- TRUST SECTION ---------- */
+        .trust {
+            background: #ecfeff;
+            padding: 60px;
+            text-align: center;
+        }
+
+        .trust h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .trust-box {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            background: #0f766e;
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        /* ---------- CATEGORIES ---------- */
+.categories {
+    padding: 70px 60px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.categories h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.categories .subtitle {
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.category-card {
+    background: #f9fafb;
+    padding: 35px 20px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.category-card i {
+    font-size: 40px;
+    color: #0f766e;
+    margin-bottom: 15px;
+}
+
+.category-card h4 {
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.category-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+    background: #ecfeff;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+.story-section {
+    height: 90vh;
+    background: linear-gradient(120deg, #ecfeff, #f0fdfa);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 80px;
+    overflow: hidden;
+}
+
+.story-content h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.story-content p {
+    font-size: 20px;
+    color: #444;
+}
+
+.story-content .sub {
+    margin-top: 10px;
+    color: #0f766e;
+    font-weight: 600;
+}
+
+.story-visual img {
+    border-radius:1cap;
+    width: 70%;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+    100% { transform: translateY(0); }
+}
+.farmer-results {
+  padding: 60px;
+}
+
+.farmer-results h2 {
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+
+.result-sub {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.farmer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.farmer-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  transition: 0.3s;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+}
+
+.farmer-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 35px rgba(0,0,0,0.12);
+}
+
+.farmer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badge {
+  background: #dcfce7;
+  color: #166534;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.location {
+  margin: 12px 0;
+  color: #555;
+}
+
+.meta {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+.view-btn {
+  display: inline-block;
+  padding: 10px 18px;
+  background: #0f766e;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.view-btn:hover {
+  background: #115e59;
+}
+
+.empty {
+  text-align: center;
+  padding: 80px;
+}
+/* ===== HERO CAROUSEL ===== */
+.hero-carousel {
+    position: relative;
+    height: 460px;
+    overflow: hidden;
+    border-radius: 0 0 28px 28px;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(6, 78, 59, 0.9) 0%,
+        rgba(6, 78, 59, 0.65) 40%,
+        rgba(6, 78, 59, 0.25) 100%
+    );
+}
+
+.hero-content {
+    position: absolute;
+    left: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    max-width: 520px;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+.hero-content h1 {
+    font-size: 46px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 14px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    opacity: 0.95;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.9);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.carousel-btn.prev { left: 20px; }
+.carousel-btn.next { right: 20px; }
+
+.carousel-btn:hover {
+    background: #fff;
+}
+
+/* MOBILE */
+@media(max-width: 768px) {
+    .hero-carousel {
+        height: 360px;
+    }
+
+    .hero-content {
+        left: 30px;
+        right: 30px;
+    }
+
+    .hero-content h1 {
+        font-size: 30px;
+    }
+}
+/* ===== MODERN HERO ===== */
+.hero-modern {
+    position: relative;
+    height: 520px;
+    border-radius: 0 0 28px 28px;
+    overflow: hidden;
+}
+
+/* Background image */
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Soft overlay that matches navbar */
+.hero-layer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(15, 118, 110, 0.9),
+        rgba(15, 118, 110, 0.6),
+        rgba(15, 118, 110, 0.15)
+    );
+}
+
+/* Content */
+.hero-inner {
+    position: relative;
+    height: 100%;
+    padding: 0 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 720px;
+    color: #fff;
+}
+
+.hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    width: fit-content;
+    margin-bottom: 18px;
+}
+
+.hero-inner h1 {
+    font-size: 48px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+}
+
+.hero-inner p {
+    font-size: 18px;
+    opacity: 0.95;
+    max-width: 520px;
+}
+
+/* SEARCH BAR */
+.hero-search {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+    background: rgba(255,255,255,0.95);
+    padding: 14px;
+    border-radius: 14px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    width:50vw;
+}
+
+.hero-search input {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    font-size: 14px;
+    outline: none;
+    border-radius:1cap;
+}
+
+.hero-search button {
+    background: #0f766e;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.hero-search button:hover {
+    background: #115e59;
+}
+
+/* MOBILE */
+@media(max-width: 768px) {
+    .hero-inner {
+        padding: 0 30px;
+    }
+
+    .hero-inner h1 {
+        font-size: 32px;
+    }
+
+    .hero-search {
+        flex-direction: column;
+    }
+}
+/* ===== TRUST MODERN ===== */
+.trust-modern {
+    background: linear-gradient(120deg, #ecfeff, #f0fdfa);
+    padding: 80px 60px;
+    text-align: center;
+}
+
+.trust-modern h2 {
+    font-size: 34px;
+    font-weight: 600;
+}
+
+.trust-modern h2 span {
+    color: #0f766e;
+}
+
+.trust-sub {
+    color: #555;
+    margin: 12px auto 50px;
+    max-width: 520px;
+}
+
+.trust-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+}
+
+.trust-card {
+    background: #fff;
+    padding: 35px 25px;
+    border-radius: 18px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.06);
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.trust-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #0f766e20, transparent);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.trust-card:hover::before {
+    opacity: 1;
+}
+
+.trust-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.12);
+}
+
+.trust-card i {
+    font-size: 36px;
+    color: #0f766e;
+    margin-bottom: 18px;
+}
+
+.trust-card h4 {
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.trust-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* ===== TESTIMONIALS ===== */
+.testimonials {
+    padding: 80px 60px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.testimonials h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    background: #f9fafb;
+    padding: 35px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+    transition: 0.3s;
+}
+
+.testimonial-card::before {
+    content: "“";
+    font-size: 80px;
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    color: #0f766e20;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-8px);
+}
+
+.testimonial-card p {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.testimonial-card h4 {
+    font-weight: 500;
+}
+
+.testimonial-card span {
+    font-size: 13px;
+    color: #777;
+}
+/* ===== BRAND QUOTE ===== */
+.brand-quote {
+    background: linear-gradient(135deg, #0f766e, #115e59);
+    color: #fff;
+    padding: 90px 30px;
+    text-align: center;
+}
+
+.brand-quote h2 {
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.brand-quote p {
+    margin-top: 15px;
+    font-size: 14px;
+    opacity: 0.85;
+}
+/* ===== FOOTER ===== */
+.footer {
+    background: #0f766e;
+    color: #e6fffa;
+    padding-top: 70px;
+    margin-top: 80px;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: 50px;
+    padding: 0 70px 50px;
+}
+
+.footer h3 {
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+
+.footer h4 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.footer p {
+    font-size: 14px;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+    color: #e6fffa;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.85;
+    transition: 0.3s;
+}
+
+.footer-links ul li a:hover {
+    opacity: 1;
+    padding-left: 6px;
+}
+
+.footer-contact p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.footer-contact i {
+    margin-right: 8px;
+    color: #99f6e4;
+}
+
+.footer-social {
+    margin-top: 18px;
+}
+
+.footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    margin-right: 10px;
+    transition: 0.3s;
+}
+
+.footer-social a:hover {
+    background: #14b8a6;
+    transform: translateY(-4px);
+}
+
+/* BOTTOM */
+.footer-bottom {
+    background: #115e59;
+    padding: 15px;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.9;
+    border-radius:1cap;
+}
+
+/* MOBILE */
+@media(max-width: 900px) {
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media(max-width: 600px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        padding: 0 30px 40px;
+    }
+}
+.logo-fa i {
+    color: #99f6e4;
+    margin-right: 8px;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  color: #2f855a;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+    </style>
+    
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+<h2 class="logo-fa">
+    <i class="fa-solid fa-seedling"></i> FarmPlace
+</h2>
+<ul>
+    <li>
+        <a href="{% url 'consumer_home' %}">Home</a>
+    </li>
+    <li>
+        <a href="{% url 'consumer_orders' %}">Orders</a>
+    </li>
+    <li>
+        <a href="#">Profile</a>
+    </li>
+    <li>
+        <a href="{% url 'logout' %}">Logout</a>
+    </li>
+</ul>
+
+</nav>
+
+<!-- HERO / CAROUSEL -->
+<!-- HERO CAROUSEL -->
+ <section class="hero-modern">
+    {% comment %} <div class="hero-bg"
+         style="background-image:url('{% static "images/farm1.jpg" %}'></div> {% endcomment %}
+
+    <div class="hero-layer">
+        <div class="hero-inner">
+
+            <span class="hero-chip">
+                <i class="fa fa-seedling"></i> Trusted Local Farmers
+            </span>
+
+            <h1>Fresh From Farm<br>To Your Home</h1>
+
+            <p>
+                Discover verified farmers near you and buy directly —
+                fresh, fair and transparent.
+            </p>
+
+            <!-- SEARCH INSIDE HERO -->
+            <form method="get" action="{% url 'consumer_search' %}" class="hero-search">
+                <input type="text" name="location" placeholder=" location" required>
+                <input type="text" name="crop" placeholder="Crop (optional)">
+                <button type="submit">
+                    <i class="fa fa-search"></i> Search
+                </button>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+{% comment %} <section class="hero-carousel">
+
+    <div class="slide active" style="background-image:url('{% static "images/farm1.jpg" %}')">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">
+                <i class="fa fa-leaf"></i> 100% Farm Fresh
+            </span>
+            <h1>Fresh From Farm to Home</h1>
+            <p>Buy directly from verified local farmers near you</p>
+        </div>
+    </div>
+
+    <div class="slide" style="background-image:url('{% static "images/farm2.jpg" %}')">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">
+                <i class="fa fa-tractor"></i> Support Farmers
+            </span>
+            <h1>Support Local Farmers</h1>
+            <p>Fair prices, transparent sourcing, no middlemen</p>
+        </div>
+    </div>
+
+    <div class="slide" style="background-image:url('{% static "images/farm3.jpg" %}')">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">
+                <i class="fa fa-basket-shopping"></i> Daily Essentials
+            </span>
+            <h1>Organic & Seasonal Produce</h1>
+            <p>Healthy food for your family, harvested on demand</p>
+        </div>
+    </div>
+
+    <button class="carousel-btn prev"><i class="fa fa-chevron-left"></i></button>
+    <button class="carousel-btn next"><i class="fa fa-chevron-right"></i></button>
+
+</section> {% endcomment %}
+<script>
+    const slides = document.querySelectorAll(".slide");
+    let current = 0;
+
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+    }
+
+    document.querySelector(".next").onclick = () => {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+    };
+
+    document.querySelector(".prev").onclick = () => {
+        current = (current - 1 + slides.length) % slides.length;
+        showSlide(current);
+    };
+
+    setInterval(() => {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+    }, 6000);
+</script>
+
+<script>
+  function getLocation() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+              position => {
+                  document.getElementById("lat").value = position.coords.latitude;
+                  document.getElementById("lng").value = position.coords.longitude;
+              },
+              error => {
+                  alert("Please allow location access for better results");
+              }
+          );
+      } else {
+          alert("Geolocation not supported");
+      }
+  }
+  
+  window.onload = getLocation;
+  </script>
+  
+<!-- SEARCH -->
+{% comment %} <div class="search-box">
+{% comment %} <form method="get">
+    <input type="text" name="location"
+           placeholder="Enter your location"
+           value="{{ searched_location }}" required>
+
+    <input type="text" name="crop"
+           placeholder="Search crop (optional)"
+           value="{{ searched_crop }}">
+
+    <button type="submit">Search</button>
+</form> {% endcomment %}
+
+
+{% if farmers %}
+<section class="farmer-results">
+    <h2>Farmers near "{{ searched_location }}"</h2>
+    <p class="result-sub">{{ farmers|length }} farmers available</p>
+
+    <div class="farmer-grid">
+        {% for farmer in farmers %}
+        <div class="farmer-card">
+            <div class="farmer-header">
+                <h4><i data-lucide="tractor" class="icon"></i>
+ {{ farmer.user.username }}</h4>
+                <span class="badge">Available</span>
+            </div>
+
+            <p class="location">
+                <i class="fa fa-location-dot"></i>
+                {{ farmer.location }}
+            </p>
+
+            <p class="meta">
+                <i class="fa-solid fa-seedling"></i> {{ farmer.crop_set.count }} crops listed
+            </p>
+
+            <a href="{% url 'farmer_crops' farmer.id %}" class="view-btn">
+                View Crops
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% elif searched %}
+<section class="farmer-results empty">
+    <h3>No farmers found near "{{ searched_location }}"</h3>
+    <p>Try searching a nearby area</p>
+</section>
+{% endif %}
+
+
+<!-- PRODUCT CATEGORIES -->
+<section class="categories">
+    <h2>What We Deliver</h2>
+    <p class="subtitle">Fresh essentials directly from farmers to your home</p>
+
+    <div class="category-grid">
+        <div class="category-card">
+            <i class="fa fa-carrot"></i>
+            <h4>Vegetables</h4>
+            <p>Fresh seasonal produce</p>
+        </div>
+
+        <div class="category-card">
+            <i class="fa fa-apple-whole"></i>
+            <h4>Fruits</h4>
+            <p>Farm-picked freshness</p>
+        </div>
+
+        <div class="category-card">
+            <i class="fa fa-wheat-awn"></i>
+            <h4>Cereals & Grains</h4>
+            <p>Rice, wheat, barley</p>
+        </div>
+
+        <div class="category-card">
+            <i class="fa fa-seedling"></i>
+            <h4>Pulses & Legumes</h4>
+            <p>Protein-rich foods</p>
+        </div>
+
+        <div class="category-card">
+            <i class="fa fa-bottle-droplet"></i>
+            <h4>Oils & Spices</h4>
+            <p>Cold-pressed & organic</p>
+        </div>
+
+    </div>
+</section>
+
+<section class="story-section">
+    <div class="story-content">
+        <h1>From Farm to Home</h1>
+        <p id="story-text">Connecting farmers directly with consumers</p>
+        <p class="sub">Fresh • Fair • Transparent</p>
+    </div>
+
+    <div class="story-visual">
+        <img src="https://i.pinimg.com/736x/b3/34/b1/b334b183f77e0874b44a7483fefd4dbe.jpg" alt="Farm Story">
+    </div>
+</section>
+
+
+<!-- FEATURES -->
+<section class="features">
+    <div class="feature-card">
+        <i class="fa fa-tractor"></i>
+        <h4>Direct From Farmers</h4>
+        <p>No middlemen, better prices</p>
+    </div>
+
+    <div class="feature-card">
+        <i class="fa fa-leaf"></i>
+        <h4>Fresh & Organic</h4>
+        <p>Harvested on demand</p>
+    </div>
+
+    <div class="feature-card">
+        <i class="fa fa-phone"></i>
+        <h4>Contact Farmer</h4>
+        <p>Get farmer phone after order acceptance</p>
+    </div>
+
+    <div class="feature-card">
+        <i class="fa fa-truck"></i>
+        <h4>Fast Delivery</h4>
+        <p>Quick & reliable logistics</p>
+    </div>
+</section>
+<section class="brand-quote">
+    <h2>
+        “When you know your farmer,<br>
+        you trust your food.”
+    </h2>
+    <p>— FarmPlace Philosophy</p>
+</section>
+
+<!-- TRUST -->
+<!-- TRUST SECTION (MODERN) -->
+<section class="trust-modern">
+    <h2>Why Consumers Trust <span>FarmPlace</span></h2>
+    <p class="trust-sub">
+        Built on transparency, technology, and trust — from farm to doorstep.
+    </p>
+
+    <div class="trust-cards">
+        <div class="trust-card">
+            <i class="fa fa-user-check"></i>
+            <h4>Verified Farmers</h4>
+            <p>Every farmer is identity-verified and location-checked.</p>
+        </div>
+
+        <div class="trust-card">
+            <i class="fa fa-chart-line"></i>
+            <h4>Live Stock Updates</h4>
+            <p>Real-time crop availability to avoid fake listings.</p>
+        </div>
+
+        <div class="trust-card">
+            <i class="fa fa-lock"></i>
+            <h4>Secure Orders</h4>
+            <p>End-to-end secured ordering and protected payments.</p>
+        </div>
+
+        <div class="trust-card">
+            <i class="fa fa-indian-rupee-sign"></i>
+            <h4>Transparent Pricing</h4>
+            <p>No hidden charges. Fair prices for farmers & consumers.</p>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+    <h2>What Our Consumers Say</h2>
+
+    <div class="testimonial-grid">
+        <div class="testimonial-card">
+            <p>
+                “FarmPlace helped me buy vegetables directly from farmers.
+                Quality is amazing and prices are fair.”
+            </p>
+            <h4>— Ankit Sharma</h4>
+            <span>Delhi</span>
+        </div>
+
+        <div class="testimonial-card">
+            <p>
+                “Knowing who grows my food gives me confidence.
+                This platform builds real trust.”
+            </p>
+            <h4>— Priya Verma</h4>
+            <span>Bangalore</span>
+        </div>
+
+        <div class="testimonial-card">
+            <p>
+                “No middlemen, no confusion. Simple and transparent buying.”
+            </p>
+            <h4>— Rohit Das</h4>
+            <span>Kolkata</span>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-brand">
+           <h2 class="logo-fa">
+    <i class="fa-solid fa-seedling"></i> FarmPlace
+</h2>
+            <p>
+                Connecting consumers directly with verified local farmers.
+                Fresh, fair, and transparent food sourcing.
+            </p>
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="{% url 'consumer_home' %}">Home</a></li>
+                <li><a href="{% url 'consumer_orders' %}">My Orders</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help & Support</a></li>
+            </ul>
+        </div>
+
+        <!-- FOR FARMERS -->
+        <div class="footer-links">
+            <h4>For Farmers</h4>
+            <ul>
+                <li><a href="#">Join as Farmer</a></li>
+                <li><a href="#">Farmer Dashboard</a></li>
+                <li><a href="#">Pricing Policy</a></li>
+                <li><a href="#">Verification Process</a></li>
+            </ul>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <p><i class="fa fa-envelope"></i> support@farmplace.in</p>
+            <p><i class="fa fa-phone"></i> +91 9XXXX XXXXX</p>
+
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-x-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="footer-bottom">
+        © 2025 FarmPlace • Built for Farmers & Consumers
+    </div>
+</footer>
+
+<script>
+    const texts = [
+        "Connecting farmers directly with consumers",
+        "No middlemen. Fair prices.",
+        "Fresh produce harvested on demand",
+        "Know your farmer. Trust your food."
+    ];
+    
+    let index = 0;
+    setInterval(() => {
+        const el = document.getElementById("story-text");
+        el.style.opacity = 0;
+        setTimeout(() => {
+            el.innerText = texts[index];
+            el.style.opacity = 1;
+            index = (index + 1) % texts.length;
+        }, 500);
+    }, 3000);
+    </script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+</script>
+
+   
+        
+</body>
+</html>
+
+
+

@@ -1,0 +1,9 @@
+<h2>Your Notifications</h2>
+
+{% for n in notifications %}
+    <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+        {{ n.message }}
+    </div>
+{% empty %}
+    <p>No notifications</p>
+{% endfor %}

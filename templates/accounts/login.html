@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Login | Farmplace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+        }
+
+        .login-card {
+            width: 900px;
+            max-width: 95%;
+            background: #ffffff;
+            border-radius: 18px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .login-left {
+            background: #f0fdfa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .login-left img {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .login-right {
+            padding: 50px 60px;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 600;
+            color: #f4a300;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 5px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #0f766e;
+        }
+
+        .login-btn {
+            margin-top: 15px;
+            width: 100%;
+            background: #0f766e;
+            color: #fff;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #115e59;
+        }
+
+        .extra-links {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .extra-links a {
+            color: #0f766e;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .login-card {
+                grid-template-columns: 1fr;
+            }
+            .login-left {
+                display: none;
+            }
+            .login-right {
+                padding: 40px 30px;
+            }
+        }
+    .hero-text {
+            font-size: 30px;
+            font-weight: 600;
+            color: #0f766e; /* teal-green to match consumer UI */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlide 1.5s ease forwards;
+        }
+
+        @keyframes fadeSlide {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        {% comment %} body {
+    background: linear-gradient(
+        to bottom,
+        #14b8a6,
+        #f0fdfa 100%
+    );
+}
+
+.hero-text {
+    color: #0f766e;
+}
+
+.login-card {
+    background: #ffffff;
+    border-radius: 18px;
+}
+
+.login-btn {
+    background: #0f766e;
+}
+
+.login-btn:hover {
+    background: #115e59;
+}
+
+input:focus {
+    border-color: #14b8a6;
+} {% endcomment %}
+
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+
+    <!-- Left Illustration -->
+    <div class="login-left">
+
+        <img src="https://i.pinimg.com/1200x/4a/b3/86/4ab3860a8d322a18473d67cdaf0b358b.jpg" alt="Login Illustration">
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-right">
+        <div class="hero-text" id="welcomeText">FarmPlace</div>
+        <br>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <div class="extra-links">
+            <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

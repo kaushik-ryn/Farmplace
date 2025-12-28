@@ -1,0 +1,507 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Crops | FarmPlace</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+.orders-container {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.order-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-3px);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.order-id {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.status {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status.pending {
+    background: #fff4cc;
+    color: #b8860b;
+}
+
+.status.accepted {
+    background: #e6f9f0;
+    color: #0a8f5a;
+}
+
+.status.cancelled {
+    background: #ffe6e6;
+    color: #c0392b;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.total {
+    margin-top: 12px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.contact {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+.popup-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.popup {
+    background: #16a34a;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    animation: slideIn 0.5s ease, fadeOut 0.5s ease 4s forwards;
+}
+
+.popup.error { background: #ef4444; }
+.popup.warning { background: #f59e0b; }
+.popup.info { background: #0ea5e9; }
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateX(100%); }
+}
+body {
+    background: #f5f7fb;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #111827;
+}
+
+
+/* Container */
+.orders-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 0 15px;
+}
+
+/* Header */
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.orders-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Filters */
+.filters {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #374151;
+    transition: all 0.2s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
+/* Order card */
+.order-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 35px rgba(0,0,0,0.08);
+}
+
+/* Header */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.order-id {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Status */
+.status {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.status.pending {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.status.accepted {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.status.cancelled {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+/* Items */
+.item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 14.5px;
+    color: #374151;
+    border-bottom: 1px dashed #e5e7eb;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+/* Total */
+.total {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 15px;
+    color: #111827;
+}
+
+/* Contact */
+.contact {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #374151;
+}
+/* Header layout */
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.orders-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Filter cards */
+.filter-cards {
+    display: flex;
+    gap: 14px;
+}
+
+.filter-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    color: #111827;
+    transition: all 0.25s ease;
+    user-select: none;
+}
+
+.filter-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 35px rgba(0,0,0,0.12);
+}
+
+/* Active state */
+.filter-card.active {
+    border: 2px solid #16a34a;
+    background: #ecfdf5;
+    color: #065f46;
+}
+.order-footer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+.order-id {
+    font-size: 17px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.item {
+    font-size: 14.5px;
+    color: #374151;
+}
+
+.item div:last-child {
+    font-weight: 500;
+    color: #111827;
+}
+
+.contact {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #065f46;
+    font-weight: 500;
+}
+
+.orders-scroll {
+    max-height: 70vh;   /* controls scroll area */
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+/* Smooth scrollbar */
+.orders-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.orders-scroll::-webkit-scrollbar-thumb {
+    background: #c7d2fe;
+    border-radius: 10px;
+}
+
+.orders-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 999px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+ .btn:hover {
+            transform: scale(1.05);
+        }
+        .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.back-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: #16a34a;
+    text-decoration: none;
+    width: fit-content;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.back-link:hover {
+    color: #0a913bff;
+    transform: translateX(-3px);
+}
+.icon {
+  width: 22px;
+  height: 22px;
+  color: #16a34a;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+</style>
+
+
+ {% if messages %}
+<div class="popup-container">
+    {% for message in messages %}
+        <div class="popup {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="orders-container">
+ <div class="orders-header">
+    <div class="header-left">
+        <a href="{% url 'consumer_search' %}" class="back-link">
+            ← Back to Dashboard
+        </a>
+        <h2 class="orders-title">My Orders</h2>
+    </div>
+
+    <div class="filter-cards">
+        <div class="filter-card active" onclick="filterOrders('all', this)">
+            <span>All Orders</span>
+        </div>
+        <div class="filter-card" onclick="filterOrders('accepted', this)">
+            <span>Accepted</span>
+        </div>
+        <div class="filter-card" onclick="filterOrders('pending', this)">
+            <span>Pending</span>
+        </div>
+    </div>
+</div>
+
+
+
+    <div class="orders-scroll">
+{% for order in orders %}
+
+    <div class="order-card" data-status="{{ order.status }}">
+
+
+        <div class="order-header">
+            <div class="order-id">Order #{{ order.id }}</div>
+            <span class="status {{ order.status }}">{{ order.status }}</span>
+        </div>
+
+        {% for item in order.items.all %}
+        <div class="item">
+            <div>{{ item.crop.name }} × {{ item.quantity }} kg</div>
+            <div>₹{{ item.subtotal }}</div>
+        </div>
+        {% endfor %}
+        
+
+       <div class="order-footer">
+    <span>Total Amount</span>
+    <span>₹{{ order.total_price }}</span>
+</div>
+
+
+
+        {% if order.status == 'accepted' %}
+        <div class="contact"><i data-lucide="phone" class="icon"></i>
+ Farmer Contact: {{ order.farmer.phone }} {{order.farmer.name}}</div>
+        {% endif %}
+
+    </div>
+    {% empty %}
+    <p>No orders yet.</p>
+    {% endfor %}
+    </div>
+
+    {% comment %} {% if order.status == "accepted" and not order.payment_done %}
+    <a href="{% url 'pay_order' order.id %}" class="pay-btn">
+        💳 Pay ₹{{ order.total_amount }}
+    </a>
+{% endif %} {% endcomment %}
+
+{% if order.payment_done %}
+    <span class="paid-badge">✅ Paid</span>
+{% endif %}
+
+
+
+
+</div>
+<script>
+function filterOrders(status, element) {
+    document.querySelectorAll('.filter-card')
+        .forEach(card => card.classList.remove('active'));
+
+    element.classList.add('active');
+
+    document.querySelectorAll('.order-card').forEach(order => {
+        if (status === 'all' || order.dataset.status === status) {
+            order.style.display = 'block';
+        } else {
+            order.style.display = 'none';
+        }
+    });
+}
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+</script>
+
+
+
+
+</body>
+</html>
