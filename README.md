@@ -61,6 +61,7 @@ https://farmplace-lcm5.onrender.com
 
 ## 🧱 Project Structure
 
+```bash
 farmplace/
 ├── accounts/
 ├── farmers/
@@ -72,7 +73,7 @@ farmplace/
 ├── Farmplace/
 ├── manage.py
 └── requirements.txt
-
+```
 ---
 
 ## ⚙️ Run Locally
