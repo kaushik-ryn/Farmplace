@@ -1,3 +1,7 @@
+![Django](https://img.shields.io/badge/Django-Backend-green)
+![Render](https://img.shields.io/badge/Deployed-Render-blue)
+![Status](https://img.shields.io/badge/Status-Live-success)
+
 # 🌾 Farmplace – Farmer to Consumer Marketplace
 
 Farmplace is a full-stack web application that connects farmers directly with consumers, enabling transparent product listing, order management, and role-based dashboards. The platform removes middlemen and ensures fair pricing.
@@ -58,7 +62,6 @@ https://farmplace-lcm5.onrender.com
 ## 🧱 Project Structure
 
 farmplace/
-│
 ├── accounts/
 ├── farmers/
 ├── consumers/
